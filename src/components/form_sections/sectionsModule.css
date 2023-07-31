@@ -1,0 +1,29 @@
+.section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 15px;
+}
+
+.add_more_section {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #6f00ff;
+  margin: 30px 0px;
+}
+
+.add_more_section:hover {
+  background-color: #ece3ff;
+}
+
+.add-section-icon {
+  width: 30px;
+  height: 30px;
+  color: #6f00ff;
+  cursor: pointer;
+}

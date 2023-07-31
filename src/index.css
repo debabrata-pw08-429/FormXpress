@@ -1,0 +1,77 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+
+  color-scheme: light dark;
+  background-color: #f1f3f4;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f1f3f4;
+}
+
+a {
+  text-decoration: none;
+  color: #f1f3f4;
+}
+
+input,
+textarea {
+  border-color: gray;
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+input:hover,
+textarea:hover {
+  border-bottom: 1px solid gray;
+}
+
+hr {
+  margin-top: 12px;
+}
+
+select {
+  border: none;
+  outline: none;
+}
+
+.settings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: rgb(229, 229, 229);
+  margin-bottom: 15px;
+  border-radius: 12px;
+}
+
+.settings .icons-set {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.settings .del {
+  width: 20px;
+  height: 20px;
+  color: red;
+  cursor: pointer;
+}
+
+.settings .addImg {
+  width: 20px;
+  height: 20px;
+  color: blue;
+  cursor: pointer;
+}

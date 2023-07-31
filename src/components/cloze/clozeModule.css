@@ -1,0 +1,71 @@
+.cloze {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+  padding: 10px;
+  background-color: white;
+  border-radius: 12px;
+}
+
+.cloze-addOptions {
+  display: flex;
+  flex-direction: column;
+}
+
+.cloze-addOptions .option {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.option .option-div {
+  border: 1px solid gray;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.option_addMore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #ece3ff;
+  padding: 5px;
+  border-radius: 8px;
+  margin: 10px 28px;
+}
+
+.categorize-addItems {
+  padding: 1rem;
+}
+.categorize-addItems > .item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.categorize-addItems h3 {
+  padding-bottom: 8px;
+  margin-top: 0px;
+  border-bottom: 1px solid rgb(198, 196, 196);
+}
+
+.cloze-preview {
+  display: flex;
+  flex-direction: column;
+}
+
+.cloze-preview > input {
+  padding: 8px;
+  border: 1px solid gray;
+  border-radius: 12px;
+  margin-top: 5px;
+}
+
+.cloze-preview > label {
+  font-size: 1rem;
+  font-weight: 400;
+}
