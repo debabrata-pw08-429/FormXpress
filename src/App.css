@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 15px;
 }
 
 .icon_react {
@@ -23,9 +24,17 @@
   align-items: center;
 }
 
-.home > div {
+.home > div:nth-child(1) {
   width: 60%;
-  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 50px;
+}
+
+.home > div:nth-child(2) {
+  width: 30%;
+  margin: 30px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,9 +46,57 @@
   cursor: pointer;
 }
 
-.home > div:hover {
+.home > div:nth-child(2):hover {
   border: none;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.home .home_form_collections {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.home_form_collections > div > h3 {
+  color: rgb(99, 99, 99);
+}
+
+.home_form_collections .home_form_01 {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.home_form_01 > div {
+  border: 1px solid gray;
+  padding: 8px 16px;
+  margin: 5px 10px;
+  border-radius: 8px;
+}
+
+.home_form_collections > div:nth-child(2) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Sections CSS */
+.add_more_section {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #6f00ff;
+  margin: 30px 0px;
+}
+
+.add_more_section:hover {
+  background-color: #ece3ff;
 }
