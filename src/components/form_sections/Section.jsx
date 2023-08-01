@@ -10,7 +10,7 @@ const Section = (props) => {
     <div className="section">
       {type === "Categorize" ? <Categorize {...props} /> : null}
       {type === "comprehension" ? <Comprehension /> : null}
-      {type === "cloze" ? <Cloze /> : null}
+      {type === "cloze" ? <Cloze {...props} /> : null}
     </div>
   );
 };

@@ -10,6 +10,20 @@
   padding: 0.5rem 1rem;
 }
 
+.nav > div:nth-child(1) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.nav .logo-nav {
+  width: 30px;
+  height: 30px;
+  color: #b175ff;
+}
+
 .nav_sub {
   display: flex;
   justify-content: center;

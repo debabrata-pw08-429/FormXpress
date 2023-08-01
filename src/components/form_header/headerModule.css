@@ -39,6 +39,7 @@
 }
 
 .header_title {
+  width: 80%;
   font-size: 45px;
   padding: 8px;
   background-color: transparent;

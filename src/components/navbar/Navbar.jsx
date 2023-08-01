@@ -1,11 +1,16 @@
 import { NavLink } from "react-router-dom";
 import "./navbarModule.css";
+import { SiFormstack } from "react-icons/Si";
 
 const Navbar = () => {
   return (
     <>
       <nav className="nav">
-        <h1>FormXpress</h1>
+        <div onClick={() => (window.location.href = "./")}>
+          <SiFormstack className="logo-nav" />
+          <h1>FormXpress</h1>
+        </div>
+
         <nav className="nav_sub">
           <NavLink
             to="/edit"

@@ -83,8 +83,6 @@ const Categorize = (props) => {
     setCategorizeObj(obj);
   };
 
-  console.log(" => ", categorizeObj);
-
   return (
     <div className="categorize">
       {/* Header */}
