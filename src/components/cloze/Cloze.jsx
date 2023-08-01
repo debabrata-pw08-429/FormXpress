@@ -19,6 +19,11 @@ const Cloze = (props) => {
     image: props.image,
   });
 
+  // Handle deleting a cloze section
+  const handleDelete = (idx) => {
+    props.handleSectionDelete(idx);
+  };
+
   // Handle input change for PreviewCase and sentenceCase
   const handleClozeChange = (event) => {
     const { name, value } = event.target;
@@ -56,7 +61,11 @@ const Cloze = (props) => {
         <div>Question Type - Cloze</div>
         <div className="icons-set">
           <RiImageAddFill className="addImg" /> {/* Icon for adding an image */}
-          <RiDeleteBin6Line className="del" /> {/* Icon for deleting */}
+          <RiDeleteBin6Line
+            className="del"
+            onClick={() => handleDelete(props.index)}
+          />
+          {/* Icon for deleting */}
         </div>
       </div>
 
@@ -122,6 +131,11 @@ Cloze.propTypes = {
   sentenceCase: PropTypes.string.isRequired,
   PreviewCase: PropTypes.string.isRequired,
   image: PropTypes.string,
+};
+
+Cloze.propTypes = {
+  handleSectionDelete: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default Cloze;

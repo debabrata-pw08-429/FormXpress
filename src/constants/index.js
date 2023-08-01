@@ -9,7 +9,7 @@ export const FormXpressData = [
     },
     sections: [
       {
-        type: "Categorize",
+        type: "categorize",
         title: "Categorize the following",
         description: "You can drag and drop the options",
         categories: ["Animals", "Fruits"],

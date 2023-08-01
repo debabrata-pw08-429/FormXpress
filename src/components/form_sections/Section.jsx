@@ -8,8 +8,8 @@ const Section = (props) => {
 
   return (
     <div className="section">
-      {type === "Categorize" ? <Categorize {...props} /> : null}
-      {type === "comprehension" ? <Comprehension /> : null}
+      {type === "categorize" ? <Categorize {...props} /> : null}
+      {type === "comprehension" ? <Comprehension {...props} /> : null}
       {type === "cloze" ? <Cloze {...props} /> : null}
     </div>
   );

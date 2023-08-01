@@ -1,12 +1,14 @@
-// Import Styles
-import { useState } from "react";
-import PropTypes from "prop-types"; // Import PropTypes for type-checking props
-import "./categorizeModule.css";
-
 // Import Modules
+import { useState } from "react";
 import { MdAddCircle, MdDragIndicator } from "react-icons/Md";
 import { RiDeleteBin6Line, RiImageAddFill } from "react-icons/Ri";
 import { TiDeleteOutline } from "react-icons/Ti";
+
+// Import Styles
+import "./categorizeModule.css";
+
+// Import PropTypes for type-checking props
+import PropTypes from "prop-types";
 
 const Categorize = (props) => {
   // State to manage the Categorize component's data
@@ -17,6 +19,11 @@ const Categorize = (props) => {
     items: props.items,
     image: props.image,
   });
+
+  // Function to handle deletion of the Categorize component
+  const handleDelete = (idx) => {
+    props.handleSectionDelete(idx);
+  };
 
   // Function to handle changes in the Categorize component's data
   const handleCategorizeChange = (e, index) => {
@@ -90,7 +97,10 @@ const Categorize = (props) => {
         <div>Question Type - Categorize</div>
         <div className="icons-set">
           <RiImageAddFill className="addImg" />
-          <RiDeleteBin6Line className="del" />
+          <RiDeleteBin6Line
+            className="del"
+            onClick={() => handleDelete(props.index)}
+          />
         </div>
       </div>
 
@@ -179,9 +189,15 @@ Categorize.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
+      category: PropTypes.string.isRequired,
     })
   ).isRequired,
   image: PropTypes.string,
+};
+
+Categorize.propTypes = {
+  handleSectionDelete: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default Categorize;
