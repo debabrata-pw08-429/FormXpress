@@ -1,18 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../App.css";
 import Header from "../components/form_header/Header";
 import Section from "../components/form_sections/Section";
-import { FormXpressData } from "../constants/index";
 import { BsPlusCircleDotted } from "react-icons/Bs";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Set_EditedSections,
+  fetch_FormDetails,
+} from "../ReduxStore/_singleForm/actions";
 
 const Edit = () => {
-  const [selectedQuestionType, setSelectedQuestionType] = useState("");
-  const [formHeader, setFormHeader] = useState(FormXpressData[0].header);
-  const [formSections, setFormSections] = useState(FormXpressData[0].sections);
+  const dispatch = useDispatch();
+  const initFormData = useSelector((state) => {
+    return state.formReducer;
+  });
 
-  // Function to add a new section based on the selected question type
+  const [selectedQuestionType, setSelectedQuestionType] = useState("");
+  const [formData, setFormData] = useState(initFormData);
+  const [formHeader, setFormHeader] = useState(initFormData.header || {});
+  const [formSections, setFormSections] = useState(initFormData.sections || []);
+
+  useEffect(() => {
+    const pathname = window.location.pathname;
+    const formId = pathname.split("/").pop();
+    const apiUrl = `${import.meta.env.VITE_SOME_apiURL}/edit/${formId}`;
+
+    async function fetchData() {
+      try {
+        const response = await axios.get(apiUrl);
+        const data = response.data;
+
+        if (data) {
+          setFormData(data);
+          dispatch(fetch_FormDetails(data));
+        }
+
+        if (data.header) {
+          setFormHeader(data.header);
+        }
+
+        if (data.sections) {
+          setFormSections(data.sections);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    fetchData();
+  }, [dispatch]);
+
   const handleAddSection = () => {
-    // Check if a question type is selected
     if (selectedQuestionType === "") {
       alert("Please select a question type.");
       return;
@@ -20,7 +59,6 @@ const Edit = () => {
 
     let newSection = {};
 
-    // Create a new section based on the selected question type
     if (selectedQuestionType === "categorize") {
       newSection = {
         type: "categorize",
@@ -50,27 +88,48 @@ const Edit = () => {
       };
     }
 
-    // Add the new section to the current list of form sections
-    setFormSections([...formSections, newSection]);
+    setFormSections((prevSections) => [...prevSections, newSection]);
+    dispatch(Set_EditedSections([...formSections, newSection]));
 
-    // Clear the selected question type after adding the section
     setSelectedQuestionType("");
   };
 
-  // Function to delete a section
   const handleSectionDelete = (index) => {
     const updatedItems = [...formSections];
     updatedItems.splice(index, 1);
     setFormSections(updatedItems);
+
+    dispatch(Set_EditedSections([...updatedItems]));
   };
+
+  const handleFormSave = async () => {
+    const pathname = window.location.pathname;
+    const formId = pathname.split("/").pop();
+    const apiUrl = `${import.meta.env.VITE_SOME_apiURL}/edit/${formId}`;
+
+    const newFormData = {
+      ...formData,
+      header: formHeader,
+      sections: formSections,
+    };
+
+    try {
+      const response = await axios.post(apiUrl, newFormData);
+      const data = response.data;
+      setFormData(data);
+    } catch (error) {
+      console.error("Error while saving form:", error);
+    }
+  };
+
+  if (!initFormData) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div className="edit_form">
-      {/* Form Header */}
-      <Header formHeader={formHeader} setFormHeader={setFormHeader} />
-
-      {/* Render all sections */}
-      {formSections.map((ele, index) => {
+      <Header />
+      {formSections?.map((ele, index) => {
         return (
           <Section
             key={index}
@@ -80,26 +139,24 @@ const Edit = () => {
           />
         );
       })}
-
-      {/* Section for adding a new section */}
-      <div className="add_more_section">
-        {/* Dropdown to select the question type */}
-        <select
-          className="question-type-dropdown"
-          value={selectedQuestionType}
-          onChange={(e) => setSelectedQuestionType(e.target.value)}
-        >
-          <option value="">Select Question Type</option>
-          <option value="categorize">Categorize</option>
-          <option value="comprehension">Comprehension</option>
-          <option value="cloze">Cloze</option>
-        </select>
-
-        {/* Button to add a new section */}
-        <BsPlusCircleDotted
-          className="add-section-icon"
-          onClick={handleAddSection}
-        />
+      <div className="add_more_section last_section">
+        <div onClick={handleFormSave}>save</div>
+        <div>
+          <select
+            className="question-type-dropdown"
+            value={selectedQuestionType}
+            onChange={(e) => setSelectedQuestionType(e.target.value)}
+          >
+            <option value="">Select Question Type</option>
+            <option value="categorize">Categorize</option>
+            <option value="comprehension">Comprehension</option>
+            <option value="cloze">Cloze</option>
+          </select>
+          <BsPlusCircleDotted
+            className="add-section-icon"
+            onClick={handleAddSection}
+          />
+        </div>
       </div>
     </div>
   );

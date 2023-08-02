@@ -1,18 +1,21 @@
-// Import Modules
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import "./categorizeModule.css";
 import { MdAddCircle, MdDragIndicator } from "react-icons/Md";
 import { RiDeleteBin6Line, RiImageAddFill } from "react-icons/Ri";
 import { TiDeleteOutline } from "react-icons/Ti";
-
-// Import Styles
-import "./categorizeModule.css";
-
-// Import PropTypes for type-checking props
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { set_CategorizeDetails } from "../../ReduxStore/_singleForm/actions";
 
 const Categorize = (props) => {
   // State to manage the Categorize component's data
+  const dispatch = useDispatch();
+  const sectionsData = useSelector((state) => {
+    return state.formReducer.sections;
+  });
+
   const [categorizeObj, setCategorizeObj] = useState({
+    type: "categorize",
     title: props.title,
     description: props.description,
     categories: props.categories,
@@ -20,9 +23,24 @@ const Categorize = (props) => {
     image: props.image,
   });
 
-  // Function to handle deletion of the Categorize component
+  useEffect(() => {
+    sectionsData[props.index] = categorizeObj;
+    dispatch(set_CategorizeDetails(sectionsData));
+  }, [categorizeObj, props.index, dispatch, sectionsData]);
+
+  // Handle deleting a cloze section
   const handleDelete = (idx) => {
     props.handleSectionDelete(idx);
+  };
+
+  // Function to handle changes in the Categorize component's data
+  const handleCategorize = (e) => {
+    const { name, value } = e.target;
+    const obj = {
+      ...categorizeObj,
+      [name]: value,
+    };
+    setCategorizeObj(obj);
   };
 
   // Function to handle changes in the Categorize component's data
@@ -63,30 +81,24 @@ const Categorize = (props) => {
   // Function to handle the selection of an item's category
   const handleItemSelect = (e, index) => {
     const { value } = e.target;
-
     const updatedItems = [...categorizeObj.items];
     updatedItems[index].category = value;
-
     const obj = {
       ...categorizeObj,
       items: updatedItems,
     };
-
     setCategorizeObj(obj);
   };
 
   // Function to handle changes in an item's name
   const handleItemName = (e, index) => {
     const { value } = e.target;
-
     const updatedItems = [...categorizeObj.items];
     updatedItems[index].name = value;
-
     const obj = {
       ...categorizeObj,
       items: updatedItems,
     };
-
     setCategorizeObj(obj);
   };
 
@@ -111,14 +123,14 @@ const Categorize = (props) => {
           name="title"
           placeholder="Question"
           value={categorizeObj.title}
-          onChange={handleCategorizeChange}
+          onChange={handleCategorize}
         />
         <input
           type="text"
           name="description"
           placeholder="Description (Optional)"
           value={categorizeObj.description}
-          onChange={handleCategorizeChange}
+          onChange={handleCategorize}
         />
       </div>
 
@@ -143,11 +155,9 @@ const Categorize = (props) => {
       {/* Items */}
       <div className="categorize-addItems">
         <h3>All Items</h3>
-
         {categorizeObj.items.map((item, index) => (
           <div className="item" key={index}>
             <MdDragIndicator className="icon_react" />
-
             <div className="item-div">
               <input
                 type="text"
@@ -155,7 +165,6 @@ const Categorize = (props) => {
                 value={item.name}
                 onChange={(e) => handleItemName(e, index)}
               />
-
               <select
                 value={item.category}
                 id={index}
@@ -168,11 +177,9 @@ const Categorize = (props) => {
                 ))}
               </select>
             </div>
-
             <TiDeleteOutline className="icon_react" />
           </div>
         ))}
-
         <div className="item_addMore" onClick={handleAddItem}>
           Add more items +
         </div>
@@ -183,21 +190,18 @@ const Categorize = (props) => {
 
 // PropTypes for type-checking props to ensure the correct data types are passed
 Categorize.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   description: PropTypes.string,
-  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.string),
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired,
+      name: PropTypes.string,
+      category: PropTypes.string,
     })
-  ).isRequired,
+  ),
   image: PropTypes.string,
-};
-
-Categorize.propTypes = {
-  handleSectionDelete: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
+  index: PropTypes.number,
+  handleSectionDelete: PropTypes.func,
 };
 
 export default Categorize;

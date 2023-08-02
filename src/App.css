@@ -94,12 +94,27 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #6f00ff;
   margin: 30px 0px;
+  border: 1px dashed blue;
+  border-radius: 12px;
 }
 
-.add_more_section:hover {
+.add_more_section > div:nth-child(1) {
+  border: 1px solid blue;
   background-color: #ece3ff;
+  color: blueviolet;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.add_more_section {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0px;
 }
 
 .question-type-dropdown {
@@ -113,4 +128,31 @@
 .add-section-icon {
   font-size: 24px;
   cursor: pointer;
+}
+
+.last_section {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.last_section div:nth-child(1) {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 21px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.last_section div:nth-child(2) {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.last_section div:nth-child(1):hover {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }

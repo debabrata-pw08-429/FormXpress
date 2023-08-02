@@ -6,8 +6,15 @@ import PropTypes from "prop-types"; // Import PropTypes for validation
 import { RiDeleteBin6Line, RiImageAddFill } from "react-icons/Ri";
 import { MdDragIndicator } from "react-icons/Md";
 import { TiDeleteOutline } from "react-icons/Ti";
+// import { useEffect } from "react";
 
 const Comprehension = (props) => {
+  // const { updatedFormObj, setUpdatedFormObj } = props;
+
+  // useEffect(() => {
+  //   setUpdatedFormObj([...updatedFormObj, clozeObj]);
+  // }, [clozeObj]);
+
   const handleDelete = (idx) => {
     props.handleSectionDelete(idx);
   };

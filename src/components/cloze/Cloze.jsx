@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 const Cloze = (props) => {
   // State to store the cloze object
   const [clozeObj, setClozeObj] = useState({
+    type: "cloze",
     title: props.title,
     description: props.description,
     options: props.options,

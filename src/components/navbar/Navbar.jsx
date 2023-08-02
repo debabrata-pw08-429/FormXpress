@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="nav">
-        <div onClick={() => (window.location.href = "./")}>
+        <div onClick={() => (window.location.href = "/")}>
           <SiFormstack className="logo-nav" />
           <h1>FormXpress</h1>
         </div>

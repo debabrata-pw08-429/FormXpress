@@ -12,9 +12,9 @@ const AllRoutes = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/edit" element={<Edit />}></Route>
-        <Route path="/preview" element={<Preview />}></Route>
-        <Route path="/responses" element={<Responses />}></Route>
+        <Route path="/edit/:formID" element={<Edit />}></Route>
+        <Route path="/preview/:formID" element={<Preview />}></Route>
+        <Route path="/responses/:formID" element={<Responses />}></Route>
       </Routes>
     </>
   );
