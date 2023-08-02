@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../App.css";
-import Header from "../components/form_header/Header";
 import Section from "../components/form_sections/Section";
 import { BsPlusCircleDotted } from "react-icons/Bs";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { RiImageAddFill } from "react-icons/Ri";
+import "../components/form_header/headerModule.css";
 import {
   Set_EditedSections,
   fetch_FormDetails,
@@ -20,6 +21,8 @@ const Edit = () => {
   const [formData, setFormData] = useState(initFormData);
   const [formHeader, setFormHeader] = useState(initFormData.header || {});
   const [formSections, setFormSections] = useState(initFormData.sections || []);
+  const fileInputRef = useRef(null);
+  // const [headerFiles, setHeaderFiles] = useState([]);
 
   useEffect(() => {
     const pathname = window.location.pathname;
@@ -117,9 +120,13 @@ const Edit = () => {
       const response = await axios.post(apiUrl, newFormData);
       const data = response.data;
       setFormData(data);
+      window.location.href = "/";
     } catch (error) {
       console.error("Error while saving form:", error);
     }
+  };
+  const handleAddImg = () => {
+    fileInputRef.current.click();
   };
 
   if (!initFormData) {
@@ -128,7 +135,51 @@ const Edit = () => {
 
   return (
     <div className="edit_form">
-      <Header />
+      <>
+        <div className="header">
+          <div
+            className="header_image"
+            onClick={handleAddImg}
+            style={{ backgroundImage: `url(${formHeader.imageURL})` }}
+          >
+            {formHeader.imageURL ? (
+              ""
+            ) : (
+              <RiImageAddFill className="cover-img" />
+            )}
+            <input
+              type="file"
+              name="headerImg"
+              ref={fileInputRef}
+              accept="image/*"
+              style={{ display: "none" }}
+              // onChange={(e) => setHeaderFiles(e.target.files)}
+            />
+          </div>
+          <div className="header_details">
+            <input
+              name="title"
+              className="header_title"
+              type="text"
+              value={formHeader.title}
+              placeholder="From title"
+              onChange={(e) =>
+                setFormHeader({ ...formHeader, title: e.target.value })
+              }
+            />
+            <hr />
+            <input
+              name="description"
+              className="header_description"
+              value={formHeader.description}
+              placeholder="Form description"
+              onChange={(e) =>
+                setFormHeader({ ...formHeader, description: e.target.value })
+              }
+            />
+          </div>
+        </div>
+      </>
       {formSections?.map((ele, index) => {
         return (
           <Section

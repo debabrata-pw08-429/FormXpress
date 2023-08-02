@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { RiImageAddFill } from "react-icons/Ri";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   fetch_FormDetails,
   set_HeaderDetails,
@@ -10,17 +10,15 @@ import axios from "axios";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const initHeader = useSelector((state) => state.formReducer.header);
-
   const [headerFiles, setHeaderFiles] = useState([]);
   const fileInputRef = useRef(null);
   const headerDataRef = useRef({});
 
   // Set the initial state of headerData using initHeader values or empty strings
   const [headerData, setHeaderData] = useState({
-    title: initHeader?.title || "",
-    description: initHeader?.description || "",
-    imageURL: initHeader?.imageURL || "",
+    title: "",
+    description: "",
+    imageURL: "",
   });
 
   const handleAddImg = () => {
@@ -34,8 +32,10 @@ const Header = () => {
         imgUrl: URL.createObjectURL(file),
       }));
 
-      const img = previewImg[0] ? previewImg[0].imgUrl : headerData.imageURL;
-      headerDataRef.current = { ...headerData, imageURL: img };
+      const img = previewImg[0]
+        ? previewImg[0].imgUrl
+        : headerDataRef.current.imageURL;
+      headerDataRef.current = { ...headerDataRef.current, imageURL: img };
     };
 
     const pathname = window.location.pathname;
@@ -62,7 +62,7 @@ const Header = () => {
           });
 
           // Dispatch the updated header data to the store
-          dispatch(set_HeaderDetails(data.header));
+          dispatch(set_HeaderDetails(headerDataRef.current));
         }
       } catch (error) {
         console.error("Error:", error);
