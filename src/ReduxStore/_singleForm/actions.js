@@ -8,6 +8,41 @@ import {
   SET_UPDATE_SECTIONS,
 } from "./actionTypes";
 
+const API = `${import.meta.env.VITE_SOME_apiURL}`;
+
+const getAllFormsAction = () => {
+  return (dispatch) => {
+    axios
+      .get(`${API}/forms`)
+      .then((res) => {
+        let formData = res.data;
+        dispatch(get_FormDetails(formData));
+      })
+      .catch((error) => {
+        console.error("Error fetching forms:", error);
+      });
+  };
+};
+
+const addFormAction = (initFormData) => {
+  const emptyForm = {
+    header: { title: "New Form", description: "", imageURL: "" },
+    sections: [],
+  };
+
+  let updatedData = {
+    ...initFormData,
+    emptyForm,
+  };
+
+  return (dispatch) => {
+    axios.post(`${API}/forms`, updatedData).then((res) => {
+      let formData = res.data;
+      dispatch(get_FormDetails(formData));
+    });
+  };
+};
+
 const get_FormDetails = (data) => {
   return {
     type: GET_EDIT_FORM,
@@ -95,4 +130,6 @@ export {
   Set_EditedSections,
   fetch_FormDetails,
   sendFormCloudinary,
+  getAllFormsAction,
+  addFormAction,
 };

@@ -8,6 +8,12 @@
   gap: 15px;
 }
 
+.form-add {
+  width: 35px;
+  height: 35px;
+  color: black;
+}
+
 .icon_react {
   width: 25px;
   height: 30px;
@@ -15,8 +21,14 @@
   cursor: pointer;
 }
 
+.Noform {
+  width: 50%;
+  margin: 50px auto;
+  text-align: center;
+}
+
 .home {
-  width: 80%;
+  width: 60%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -25,7 +37,7 @@
 }
 
 .home > div:nth-child(1) {
-  width: 60%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -33,16 +45,16 @@
 }
 
 .home > div:nth-child(2) {
-  width: 30%;
+  width: 100%;
   margin: 30px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid gray;
+  border: 1px dashed black;
   border-radius: 5px;
   color: gray;
-  padding: 1rem;
+  padding: 5px;
   cursor: pointer;
 }
 

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "./navbarModule.css";
 import { SiFormstack } from "react-icons/Si";
+import { BsGithub } from "react-icons/Bs";
 
 const Navbar = () => {
   return (
@@ -13,6 +14,23 @@ const Navbar = () => {
 
         <nav className="nav_sub">
           <NavLink
+            to="https://github.com/debabrata-pw08-429"
+            style={({ isActive }) => {
+              return {
+                fontWeight: isActive ? "bold" : "",
+                borderRadius: isActive ? "8px" : "",
+                color: isActive ? "white" : "",
+                padding: isActive ? "8px" : "",
+                fontSize: "30px",
+              };
+            }}
+            target="_blank"
+          >
+            <BsGithub />
+          </NavLink>
+
+          {/* ----------------EDIT:NAV------------> */}
+          {/* <NavLink
             to="/edit"
             style={({ isActive }) => {
               return {
@@ -53,7 +71,7 @@ const Navbar = () => {
             }}
           >
             Responses
-          </NavLink>
+          </NavLink> */}
         </nav>
       </nav>
     </>

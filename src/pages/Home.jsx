@@ -1,52 +1,49 @@
+// Import React Modules
 import { useEffect, useState } from "react";
-import "../App.css";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { get_FormDetails } from "../ReduxStore/_singleForm/actions";
+import { RiFileAddFill } from "react-icons/Ri";
 
-const emptyForm = {
-  header: { title: "New Form", description: "", imageURL: "" },
-  sections: [],
-};
+// Import Styles
+import "../App.css";
 
-const apiUrl = `${import.meta.env.VITE_SOME_apiURL}/forms`;
+// Global Variables
+const API = `${import.meta.env.VITE_SOME_apiURL}/forms`;
 
+// Home Component
 const Home = () => {
-  const dispatch = useDispatch();
   const [forms, setForms] = useState([]);
 
+  // Fetch all forms on component mount
   useEffect(() => {
-    async function fetchData() {
-      const Url = `${import.meta.env.VITE_SOME_apiURL}/forms`;
-      // Function to fetch data from the API
-      try {
-        const response = await axios.get(Url);
-        const data = await response.data;
-        setForms(data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    }
+    const fetchAllForms = () => {
+      axios
+        .get(API)
+        .then((res) => {
+          let formData = res.data;
+          setForms(formData);
+        })
+        .catch((error) => {
+          console.error("Error fetching forms:", error);
+        });
+    };
+    fetchAllForms();
+  }, []);
 
-    // Call the fetchData function when the component mounts
-    fetchData();
-  }, [forms]);
-
-  // Function to handle the "Edit" button click
-  const handleEdit = (editData) => {
-    if (editData) {
-      dispatch(get_FormDetails(editData));
-      const formId = editData._id;
-      window.location.href = `/edit/${formId}`;
-    }
+  // Redirects to the edit page for a specific form
+  const redirectToEditPage = (formId) => {
+    window.location = `/edit/${formId}`;
   };
 
+  // Adds a new form to the server and refreshes the page
   const addNewForm = () => {
-    setForms((prevForms) => [...prevForms, { ...emptyForm }]);
+    const emptyForm = {
+      header: { title: "New Form", description: "", imageURL: "" },
+      sections: [],
+    };
 
     async function sendFormData() {
       try {
-        const response = await axios.post(apiUrl, emptyForm);
+        const response = await axios.post(API, emptyForm);
         const data = await response.data;
         setForms([...data]);
       } catch (error) {
@@ -55,52 +52,68 @@ const Home = () => {
     }
 
     sendFormData();
+
+    // Adding the new form to the current state
+    setForms((prevForms) => [...prevForms, { ...emptyForm }]);
+
+    // Reload the page to display the new form
+    window.location.reload();
   };
 
-  const handleFormDeletion = async (formId) => {
-    try {
-      // Make a DELETE request to the API to delete the form with the given formId
-      const response = await axios.delete(`${apiUrl}/${formId}`);
-
-      // If the deletion is successful, remove the form from the local state
-      if (response.status === 200) {
-        setForms((prevForms) =>
-          prevForms.filter((form) => form._id !== formId)
-        );
+  // Deletes a form with the specified formId from the server and refreshes the page
+  const handleFormDeletion = (formId) => {
+    async function deleteFormData() {
+      try {
+        const response = await axios.delete(`${API}/${formId}`);
+        if (response.status === 200) {
+          setForms((prevForms) =>
+            prevForms.filter((form) => form._id !== formId)
+          );
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
     }
+    deleteFormData();
+
+    // Reload the page to reflect the form deletion
+    window.location.reload();
   };
 
+  // Render loading message if forms are not yet fetched
+  if (forms.length <= 0) {
+    return <h1 className="Noform">Loading...</h1>;
+  }
+
+  // Render the list of forms along with edit and delete buttons
   return (
     <div className="home">
       <div>
-        {forms?.length <= 0 ? (
-          <h1>No Forms Available</h1>
-        ) : (
-          forms?.map((ele, idx) => {
-            return (
-              <div key={idx} className="home_form_collections">
-                <div className="home_form_01">
-                  <div>{idx + 1}</div>
-                  <h3 key={idx}>{ele.header.title}</h3>
-                </div>
-                <div>
-                  {/* Add an onClick event to handleEdit when "Edit" button is clicked */}
-                  <button onClick={() => handleEdit(ele)}>Edit</button>
-                  {/* Pass the form._id to the handleFormDeletion function */}
-                  <button onClick={() => handleFormDeletion(ele._id)}>
-                    Delete
-                  </button>
-                </div>
+        {forms?.map((form, index) => {
+          return (
+            <div key={index} className="home_form_collections">
+              <div className="home_form_01">
+                <div>{index + 1}</div>
+                <h3 key={index}>{form.header.title}</h3>
               </div>
-            );
-          })
-        )}
+              <div>
+                <button onClick={() => redirectToEditPage(form._id)}>
+                  Edit
+                </button>
+
+                <button onClick={() => handleFormDeletion(form._id)}>
+                  Delete
+                </button>
+              </div>
+            </div>
+          );
+        })}
       </div>
-      {/* Add a clickable element to redirect to the edit page */}
-      <div onClick={addNewForm}>+ Add New Form</div>
+
+      {/* Add new form icon */}
+      <div onClick={addNewForm}>
+        <RiFileAddFill className="form-add" />
+      </div>
     </div>
   );
 };
