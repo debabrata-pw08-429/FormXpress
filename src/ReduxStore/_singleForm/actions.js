@@ -10,13 +10,14 @@ import {
 
 const API = `${import.meta.env.VITE_SOME_apiURL}`;
 
-const getAllFormsAction = () => {
+const fetchFormDetailsAction = (id) => {
   return (dispatch) => {
     axios
-      .get(`${API}/forms`)
+      .get(`${API}/edit/${id}`)
       .then((res) => {
         let formData = res.data;
-        dispatch(get_FormDetails(formData));
+        console.log("formData from store", formData);
+        dispatch(setFormData(formData));
       })
       .catch((error) => {
         console.error("Error fetching forms:", error);
@@ -24,38 +25,40 @@ const getAllFormsAction = () => {
   };
 };
 
-const addFormAction = (initFormData) => {
-  const emptyForm = {
-    header: { title: "New Form", description: "", imageURL: "" },
-    sections: [],
-  };
-
-  let updatedData = {
-    ...initFormData,
-    emptyForm,
-  };
-
+const updateFormDetailsAction = (formId, updatedData) => {
   return (dispatch) => {
-    axios.post(`${API}/forms`, updatedData).then((res) => {
-      let formData = res.data;
-      dispatch(get_FormDetails(formData));
-    });
+    axios
+      .post(`${API}/edit/${formId}`, updatedData)
+      .then((res) => {
+        let formData = res.data;
+        dispatch(setFormData(formData));
+      })
+      .catch((error) => {
+        console.error("Error updating forms:", error);
+      });
   };
 };
 
-const get_FormDetails = (data) => {
+const setFormData = (data) => {
   return {
     type: GET_EDIT_FORM,
     payload: data,
   };
 };
 
-const fetch_FormDetails = (data) => {
-  return {
-    type: GET_EDIT_FORM,
-    payload: data,
-  };
-};
+// const get_FormDetails = (data) => {
+//   return {
+//     type: GET_EDIT_FORM,
+//     payload: data,
+//   };
+// };
+
+// const fetch_FormDetails = (data) => {
+//   return {
+//     type: GET_EDIT_FORM,
+//     payload: data,
+//   };
+// };
 
 const Set_EditedSections = (data) => {
   return {
@@ -113,23 +116,13 @@ const sendFormCloudinary = (formID, imageData) => {
   };
 };
 
-// const fetchFormCloudinary = () => {
-//   return (dispatch) => {
-//     axios.get(URL).then((res) => {
-//       return dispatch(redData(res.data));
-//     });
-//   };
-// };
-
 export {
-  get_FormDetails,
   set_HeaderDetails,
   set_CategorizeDetails,
   set_ClozeDetails,
   set_ComprehensionDetails,
   Set_EditedSections,
-  fetch_FormDetails,
   sendFormCloudinary,
-  getAllFormsAction,
-  addFormAction,
+  fetchFormDetailsAction,
+  updateFormDetailsAction,
 };

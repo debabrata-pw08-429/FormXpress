@@ -84,3 +84,37 @@ export const newCategorizeObj = {
   items: [{ name: "", category: "" }],
   image: "",
 };
+
+export const initState = {
+  header: {
+    title: "",
+    description: "",
+    imageURL: "",
+  },
+  sections: [
+    {
+      type: "categorize",
+      title: "",
+      description: "",
+      categories: [],
+      items: [],
+      image: "",
+    },
+    {
+      type: "cloze",
+      title: "",
+      description: "",
+      options: [],
+      sentenceCase: "",
+      PreviewCase: "",
+      image: "",
+    },
+    {
+      type: "comprehension",
+      title: "",
+      description: "",
+      multipleQuestions: [],
+      image: "",
+    },
+  ],
+};

@@ -12,7 +12,7 @@ const initialState = {};
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_EDIT_FORM:
-      return { ...payload };
+      return { ...state, ...payload };
 
     case SET_UPDATE_SECTIONS:
       return {

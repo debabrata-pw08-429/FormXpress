@@ -2,16 +2,23 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { RiFileAddFill } from "react-icons/Ri";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // Import Styles
 import "../App.css";
+
+// Import Locals_
+import { fetchFormDetailsAction } from "../ReduxStore/_singleForm/actions";
 
 // Global Variables
 const API = `${import.meta.env.VITE_SOME_apiURL}/forms`;
 
 // Home Component
 const Home = () => {
+  const dispatch = useDispatch();
   const [forms, setForms] = useState([]);
+  const navigate = useNavigate();
 
   // Fetch all forms on component mount
   useEffect(() => {
@@ -31,33 +38,29 @@ const Home = () => {
 
   // Redirects to the edit page for a specific form
   const redirectToEditPage = (formId) => {
-    window.location = `/edit/${formId}`;
+    dispatch(fetchFormDetailsAction(formId));
+    navigate(`/edit/${formId}`);
   };
 
   // Adds a new form to the server and refreshes the page
   const addNewForm = () => {
-    const emptyForm = {
-      header: { title: "New Form", description: "", imageURL: "" },
-      sections: [],
-    };
-
     async function sendFormData() {
+      const emptyForm = {
+        header: { title: "New Form", description: "", imageURL: "" },
+        sections: [],
+      };
+
       try {
         const response = await axios.post(API, emptyForm);
         const data = await response.data;
-        setForms([...data]);
+        const newForm = data[0];
+        setForms((prev) => [...prev, { ...newForm }]);
       } catch (error) {
         console.error("Error:", error);
       }
     }
 
     sendFormData();
-
-    // Adding the new form to the current state
-    setForms((prevForms) => [...prevForms, { ...emptyForm }]);
-
-    // Reload the page to display the new form
-    window.location.reload();
   };
 
   // Deletes a form with the specified formId from the server and refreshes the page
@@ -75,9 +78,6 @@ const Home = () => {
       }
     }
     deleteFormData();
-
-    // Reload the page to reflect the form deletion
-    window.location.reload();
   };
 
   // Render loading message if forms are not yet fetched
