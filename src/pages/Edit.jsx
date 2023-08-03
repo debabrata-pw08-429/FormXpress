@@ -1,38 +1,52 @@
+// Import React Modules
 import { useEffect, useRef, useState } from "react";
-import "../App.css";
-import Section from "../components/form_sections/Section";
 import { BsPlusCircleDotted } from "react-icons/Bs";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
 import { RiImageAddFill } from "react-icons/Ri";
-import "../components/form_header/headerModule.css";
+import axios from "axios";
+
+// Import Local Utilities
+import Section from "../components/form_sections/Section";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Set_EditedSections,
   fetch_FormDetails,
 } from "../ReduxStore/_singleForm/actions";
+import {
+  newCategorizeObj,
+  newClozeObj,
+  newComprehensionObj,
+} from "../constants";
+
+// Import Styles
+import "../App.css";
+import "../components/form_header/headerModule.css";
+
+// Global Variables
+const pathname = window.location.pathname;
+const formId = pathname.split("/").pop();
+const apiUrl = `${import.meta.env.VITE_SOME_apiURL}/edit/${formId}`;
 
 const Edit = () => {
+  // State and Ref Hooks
   const dispatch = useDispatch();
   const initFormData = useSelector((state) => {
     return state.formReducer;
   });
-
-  const [selectedQuestionType, setSelectedQuestionType] = useState("");
   const [formData, setFormData] = useState(initFormData);
-  const [formHeader, setFormHeader] = useState(initFormData.header || {});
-  const [formSections, setFormSections] = useState(initFormData.sections || []);
+  const [formHeader, setFormHeader] = useState(formData.header || {});
+  const [formSections, setFormSections] = useState(formData.sections || []);
+  const [selectedQuestionType, setSelectedQuestionType] = useState("");
+  const [headerImage, setHeaderImage] = useState(formHeader.imageURL);
   const fileInputRef = useRef(null);
-  // const [headerFiles, setHeaderFiles] = useState([]);
 
+  // Fetch form data from API on component mount
   useEffect(() => {
-    const pathname = window.location.pathname;
-    const formId = pathname.split("/").pop();
-    const apiUrl = `${import.meta.env.VITE_SOME_apiURL}/edit/${formId}`;
-
     async function fetchData() {
       try {
         const response = await axios.get(apiUrl);
         const data = response.data;
+
+        console.log("fetch_FormDetails", data);
 
         if (data) {
           setFormData(data);
@@ -54,6 +68,7 @@ const Edit = () => {
     fetchData();
   }, [dispatch]);
 
+  // Add a new section to the form
   const handleAddSection = () => {
     if (selectedQuestionType === "") {
       alert("Please select a question type.");
@@ -63,72 +78,76 @@ const Edit = () => {
     let newSection = {};
 
     if (selectedQuestionType === "categorize") {
-      newSection = {
-        type: "categorize",
-        title: "",
-        description: "",
-        categories: [],
-        items: [{ name: "", category: "" }],
-        image: "",
-      };
+      newSection = newCategorizeObj;
     } else if (selectedQuestionType === "comprehension") {
-      newSection = {
-        type: "comprehension",
-        title: "",
-        description: "",
-        multipleQuestions: [{ question: "", answers: [] }],
-        image: "",
-      };
+      newSection = newComprehensionObj;
     } else if (selectedQuestionType === "cloze") {
-      newSection = {
-        type: "cloze",
-        title: "",
-        description: "",
-        options: [],
-        sentenceCase: "",
-        PreviewCase: "",
-        image: "",
-      };
+      newSection = newClozeObj;
     }
 
     setFormSections((prevSections) => [...prevSections, newSection]);
     dispatch(Set_EditedSections([...formSections, newSection]));
-
     setSelectedQuestionType("");
   };
 
+  // Delete a section from the form
   const handleSectionDelete = (index) => {
     const updatedItems = [...formSections];
     updatedItems.splice(index, 1);
     setFormSections(updatedItems);
-
     dispatch(Set_EditedSections([...updatedItems]));
   };
 
+  // Handle file change for the header image
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    transformFileFunc(file);
+  };
+
+  // Transform the selected file into a base64 URL
+  const transformFileFunc = (file) => {
+    const reader = new FileReader();
+
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setHeaderImage(reader.result);
+      };
+    } else {
+      setHeaderImage(formHeader.imageURL);
+    }
+  };
+
+  // Handle the upload event for the header image
+  const handleUploadEvent = () => {
+    fileInputRef.current.click();
+  };
+
+  // Handle form save
   const handleFormSave = async () => {
-    const pathname = window.location.pathname;
-    const formId = pathname.split("/").pop();
     const apiUrl = `${import.meta.env.VITE_SOME_apiURL}/edit/${formId}`;
 
     const newFormData = {
       ...formData,
-      header: formHeader,
+      header: {
+        title: formHeader.title,
+        description: formHeader.description,
+        imageURL: headerImage,
+      },
       sections: formSections,
     };
 
     try {
       const response = await axios.post(apiUrl, newFormData);
-      const data = response.data;
+      const data = await response.data;
       setFormData(data);
       window.location.href = "/";
     } catch (error) {
       console.error("Error while saving form:", error);
     }
   };
-  const handleAddImg = () => {
-    fileInputRef.current.click();
-  };
 
+  // Render loading message if data is not yet available
   if (!initFormData) {
     return <h1>Loading...</h1>;
   }
@@ -139,21 +158,20 @@ const Edit = () => {
         <div className="header">
           <div
             className="header_image"
-            onClick={handleAddImg}
-            style={{ backgroundImage: `url(${formHeader.imageURL})` }}
+            onClick={handleUploadEvent}
+            style={{
+              backgroundImage: `url(${headerImage ? headerImage : null})`,
+            }}
           >
-            {formHeader.imageURL ? (
-              ""
-            ) : (
-              <RiImageAddFill className="cover-img" />
-            )}
+            {headerImage ? null : <RiImageAddFill className="cover-img" />}
+            {/* File Input */}
             <input
               type="file"
               name="headerImg"
               ref={fileInputRef}
               accept="image/*"
               style={{ display: "none" }}
-              // onChange={(e) => setHeaderFiles(e.target.files)}
+              onChange={handleFileChange}
             />
           </div>
           <div className="header_details">

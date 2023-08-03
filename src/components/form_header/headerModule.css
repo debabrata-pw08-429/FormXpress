@@ -15,8 +15,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 195px;
-  border: 1px solid whitesmoke;
+  height: 200px;
+  border: 1px dashed blue;
   border-radius: 25px 25px 0 0;
   cursor: pointer;
   background-size: cover;

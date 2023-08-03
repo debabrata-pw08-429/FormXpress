@@ -58,3 +58,29 @@ export const FormXpressData = [
     ],
   },
 ];
+
+export const newClozeObj = {
+  type: "cloze",
+  title: "",
+  description: "",
+  options: [],
+  sentenceCase: "",
+  PreviewCase: "",
+  image: "",
+};
+export const newComprehensionObj = {
+  type: "comprehension",
+  title: "",
+  description: "",
+  multipleQuestions: [{ question: "", answers: [] }],
+  image: "",
+};
+
+export const newCategorizeObj = {
+  type: "categorize",
+  title: "",
+  description: "",
+  categories: [],
+  items: [{ name: "", category: "" }],
+  image: "",
+};

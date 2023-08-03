@@ -17,11 +17,12 @@ const Home = () => {
 
   useEffect(() => {
     async function fetchData() {
+      const Url = `${import.meta.env.VITE_SOME_apiURL}/forms`;
       // Function to fetch data from the API
       try {
-        const response = await axios.get(apiUrl);
+        const response = await axios.get(Url);
         const data = await response.data;
-        setForms([...data]);
+        setForms(data);
       } catch (error) {
         console.error("Error:", error);
       }

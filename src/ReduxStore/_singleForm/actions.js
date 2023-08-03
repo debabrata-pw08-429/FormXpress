@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   GET_EDIT_FORM,
   SET_EDIT_Header,
@@ -29,6 +30,7 @@ const Set_EditedSections = (data) => {
 };
 
 const set_HeaderDetails = (data) => {
+  console.log(data);
   return {
     type: SET_EDIT_Header,
     payload: data,
@@ -56,6 +58,34 @@ const set_ComprehensionDetails = (data) => {
   };
 };
 
+const sendFormCloudinary = (formID, imageData) => {
+  const imgAPI = `${import.meta.env.VITE_SOME_apiURL}/image`;
+  const data = {
+    formID: formID,
+    image: imageData,
+  };
+
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(imgAPI, data);
+      const jsonData = response.data;
+      console.log("sendFormCloudinary", jsonData);
+
+      return dispatch(get_FormDetails(jsonData));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+// const fetchFormCloudinary = () => {
+//   return (dispatch) => {
+//     axios.get(URL).then((res) => {
+//       return dispatch(redData(res.data));
+//     });
+//   };
+// };
+
 export {
   get_FormDetails,
   set_HeaderDetails,
@@ -64,4 +94,5 @@ export {
   set_ComprehensionDetails,
   Set_EditedSections,
   fetch_FormDetails,
+  sendFormCloudinary,
 };

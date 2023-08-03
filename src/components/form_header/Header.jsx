@@ -36,6 +36,8 @@ const Header = () => {
         ? previewImg[0].imgUrl
         : headerDataRef.current.imageURL;
       headerDataRef.current = { ...headerDataRef.current, imageURL: img };
+
+      console.log(headerDataRef);
     };
 
     const pathname = window.location.pathname;

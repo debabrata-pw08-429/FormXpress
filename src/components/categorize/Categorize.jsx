@@ -16,13 +16,14 @@ const Categorize = (props) => {
 
   const [categorizeObj, setCategorizeObj] = useState({
     type: "categorize",
-    title: props.title,
-    description: props.description,
-    categories: props.categories,
-    items: props.items,
-    image: props.image,
+    title: props.title || "",
+    description: props.description || "",
+    categories: props.categories || [],
+    items: props.items || [],
+    image: props.image || "",
   });
 
+  
   useEffect(() => {
     sectionsData[props.index] = categorizeObj;
     dispatch(set_CategorizeDetails(sectionsData));
