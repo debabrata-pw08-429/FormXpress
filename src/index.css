@@ -1,9 +1,9 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-
+  /* background-color: #f5f6f7; */
+  background-color: whitesmoke;
   color-scheme: light dark;
-  background-color: #ece3ff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,7 +15,9 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #ece3ff;
+  /* background-color: #e6e6e6; */
+  background-color: whitesmoke;
+  color: #333333;
 }
 
 a {

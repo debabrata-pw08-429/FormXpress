@@ -10,7 +10,7 @@ import "./index.css";
 // Import Components_
 import App from "./App.jsx";
 
-// Render SPA React App ------------------------------------
+// Render SPA React App ----------------------------------->
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <BrowserRouter>

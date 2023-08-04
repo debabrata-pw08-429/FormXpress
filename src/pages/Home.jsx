@@ -1,14 +1,17 @@
 // Import React Modules
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { RiFileAddFill } from "react-icons/Ri";
+import { RiDeleteBinLine, RiFileAddFill } from "react-icons/Ri";
 import { Link } from "react-router-dom";
+import { TbEdit } from "react-icons/Tb";
+import { AiFillEye } from "react-icons/Ai";
 
 // Global Variables
 const API = `${import.meta.env.VITE_SOME_apiURL}/forms`;
 
 // Import Styles
 import "../App.css";
+import Navbar from "../components/navbar/Navbar";
 
 // Home Component
 const Home = () => {
@@ -76,7 +79,8 @@ const Home = () => {
   // Render the list of forms along with edit and delete buttons
   return (
     <div className="home">
-      <div>
+      <Navbar />
+      <div className="map-home">
         {forms?.map((form, index) => {
           return (
             <div key={index} className="home_form_collections">
@@ -85,17 +89,32 @@ const Home = () => {
                 <h3 key={index}>{form.header.title}</h3>
               </div>
               <div>
-                <button>
+                <button className="home_buttons home_edit_button">
+                  <TbEdit />
                   <Link
                     to={`/edit/${form._id}`}
-                    className="home_edit_button"
+                    className="home_edit_button_link"
                     state={form}
                   >
                     Edit
                   </Link>
                 </button>
+                <button className="home_buttons home_preview_button">
+                  <AiFillEye />
+                  <Link
+                    to={`/edit/${form._id}`}
+                    className="home_preview_button_link"
+                    state={form}
+                  >
+                    Preview
+                  </Link>
+                </button>
 
-                <button onClick={() => handleFormDeletion(form._id)}>
+                <button
+                  onClick={() => handleFormDeletion(form._id)}
+                  className="home_buttons home_delete_button"
+                >
+                  <RiDeleteBinLine />
                   Delete
                 </button>
               </div>
@@ -105,7 +124,7 @@ const Home = () => {
       </div>
 
       {/* Add new form icon */}
-      <div onClick={addNewForm}>
+      <div onClick={addNewForm} className="home-add">
         <RiFileAddFill className="form-add" />
       </div>
     </div>

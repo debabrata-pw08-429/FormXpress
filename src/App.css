@@ -28,7 +28,7 @@
 }
 
 .home {
-  width: 60%;
+  width: 65%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -36,15 +36,16 @@
   align-items: center;
 }
 
-.home > div:nth-child(1) {
+.home > .map-home {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 50px;
+  margin: 10px auto;
+  margin-bottom: 50px;
 }
 
-.home > div:nth-child(2) {
+.home > .home-add {
   width: 100%;
   margin: 30px auto;
   display: flex;
@@ -58,7 +59,7 @@
   cursor: pointer;
 }
 
-.home > div:nth-child(2):hover {
+.home > .home-add:hover {
   border: none;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
@@ -70,9 +71,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: 5px;
+  background-color: white;
+  color: #333333;
 }
 
 .home_form_collections > div > h3 {
@@ -85,10 +89,14 @@
 }
 
 .home_form_01 > div {
-  border: 1px solid gray;
-  padding: 8px 16px;
-  margin: 5px 10px;
-  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px dashed rgb(185, 185, 185);
+  padding: 15px;
+  margin: 5px 15px 5px 0px;
+  font-size: larger;
+  font-weight: 800;
 }
 
 .home_form_collections > div:nth-child(2) {
@@ -170,5 +178,33 @@
 }
 
 .home_edit_button {
-  color: black;
+  color: #007bff;
+  border: 1px dashed #007bff;
+}
+.home_edit_button .home_edit_button_link {
+  color: #007bff;
+}
+
+.home_preview_button {
+  color: green;
+  border: 1px dashed green;
+}
+.home_preview_button .home_preview_button_link {
+  color: green;
+}
+
+.home_delete_button {
+  color: #ff4136;
+  border: 1px dashed #ff4136;
+}
+
+.home_buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
 }

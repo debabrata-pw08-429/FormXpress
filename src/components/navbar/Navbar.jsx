@@ -1,14 +1,14 @@
 import { NavLink } from "react-router-dom";
 import "./navbarModule.css";
-import { SiFormstack } from "react-icons/Si";
 import { BsGithub } from "react-icons/Bs";
+import Logo from "../../assets/Logo.png";
 
 const Navbar = () => {
   return (
     <>
       <nav className="nav">
         <div onClick={() => (window.location.href = "/")}>
-          <SiFormstack className="logo-nav" />
+          <img src={Logo} alt="logo" className="logo-nav" />
           <h1>FormXpress</h1>
         </div>
 
