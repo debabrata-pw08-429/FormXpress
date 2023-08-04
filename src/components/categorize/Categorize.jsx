@@ -1,8 +1,6 @@
 // Import React Modules
 import { useEffect, useState } from "react";
-import { MdAddCircle, MdDragIndicator } from "react-icons/Md";
-import { RiDeleteBin6Line, RiImageAddFill } from "react-icons/Ri";
-import { TiDeleteOutline } from "react-icons/Ti";
+
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -116,8 +114,12 @@ const Categorize = (props) => {
       <div className="settings">
         <div>Question Type - Categorize</div>
         <div className="icons-set">
-          <RiImageAddFill className="addImg" />
-          <RiDeleteBin6Line
+          <img
+            src="https://img.icons8.com/?size=512&id=GiNKOzxL3w6e&format=png"
+            className="addImg"
+          />
+          <img
+            src="https://img.icons8.com/?size=512&id=14237&format=png"
             className="del"
             onClick={() => handleDelete(props.index)}
           />
@@ -156,7 +158,11 @@ const Categorize = (props) => {
               />
             </div>
           ))}
-          <MdAddCircle className="add-icon" onClick={handleAddCategory} />
+          <img
+            src="https://img.icons8.com/?size=512&id=24717&format=png"
+            className="add-icon"
+            onClick={handleAddCategory}
+          />
         </div>
       </div>
 
@@ -165,7 +171,10 @@ const Categorize = (props) => {
         <h3>All Items</h3>
         {categorizeObj.items.map((item, index) => (
           <div className="item" key={index}>
-            <MdDragIndicator className="icon_react" />
+            <img
+              src="https://img.icons8.com/?size=512&id=78883&format=png"
+              className="icon_react"
+            />
             <div className="item-div">
               <input
                 type="text"
@@ -185,7 +194,10 @@ const Categorize = (props) => {
                 ))}
               </select>
             </div>
-            <TiDeleteOutline className="icon_react" />
+            <img
+              src="https://img.icons8.com/?size=512&id=14237&format=png"
+              className="icon_react"
+            />
           </div>
         ))}
         <div className="item_addMore" onClick={handleAddItem}>

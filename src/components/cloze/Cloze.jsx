@@ -2,9 +2,7 @@
 import "./clozeModule.css";
 
 // Import Modules
-import { MdDragIndicator } from "react-icons/Md";
-import { TiDeleteOutline } from "react-icons/Ti";
-import { RiDeleteBin6Line, RiImageAddFill } from "react-icons/Ri";
+
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,8 +71,13 @@ const Cloze = (props) => {
       <div className="settings">
         <div>Question Type - Cloze</div>
         <div className="icons-set">
-          <RiImageAddFill className="addImg" /> {/* Icon for adding an image */}
-          <RiDeleteBin6Line
+          <img
+            src="https://img.icons8.com/?size=512&id=GiNKOzxL3w6e&format=png"
+            className="addImg"
+          />{" "}
+          {/* Icon for adding an image */}
+          <img
+            src="https://img.icons8.com/?size=512&id=14237&format=png"
             className="del"
             onClick={() => handleDelete(props.index)}
           />
@@ -112,7 +115,11 @@ const Cloze = (props) => {
 
         {clozeObj.options.map((opt, idx) => (
           <div className="option" key={idx}>
-            <MdDragIndicator className="icon_react" /> {/* Icon for dragging */}
+            <img
+              src="https://img.icons8.com/?size=512&id=78883&format=png"
+              className="icon_react"
+            />{" "}
+            {/* Icon for dragging */}
             <div className="option-div">
               <input
                 type="text"
@@ -123,7 +130,11 @@ const Cloze = (props) => {
                 }
               />
             </div>
-            <TiDeleteOutline className="icon_react" /> {/* Icon for deleting */}
+            <img
+              src="https://img.icons8.com/?size=512&id=14237&format=png"
+              className="icon_react"
+            />{" "}
+            {/* Icon for deleting */}
           </div>
         ))}
 

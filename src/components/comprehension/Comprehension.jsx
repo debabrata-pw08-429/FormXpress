@@ -3,9 +3,6 @@ import "./comprehensionModule.css";
 import PropTypes from "prop-types";
 
 // Import Modules
-import { RiDeleteBin6Line, RiImageAddFill } from "react-icons/Ri";
-import { MdDragIndicator } from "react-icons/Md";
-import { TiDeleteOutline } from "react-icons/Ti";
 
 const Comprehension = (props) => {
   const handleDelete = (idx) => {
@@ -18,8 +15,12 @@ const Comprehension = (props) => {
       <div className="settings">
         <div>Question Type - Comprehension</div>
         <div className="icons-set">
-          <RiImageAddFill className="addImg" />
-          <RiDeleteBin6Line
+          <img
+            src="https://img.icons8.com/?size=512&id=GiNKOzxL3w6e&format=png"
+            className="addImg"
+          />
+          <img
+            src="https://img.icons8.com/?size=512&id=14237&format=png"
             className="del"
             onClick={() => handleDelete(props.index)}
           />
@@ -43,11 +44,17 @@ const Comprehension = (props) => {
           <div className="mcq">
             {/* MCQ Options */}
             <div className="mcq-option">
-              <MdDragIndicator className="icon_react" />
+              <img
+                src="https://img.icons8.com/?size=512&id=78883&format=png"
+                className="icon_react"
+              />
               <div className="mcq-option-div">
                 <input type="text" placeholder="Option" />
               </div>
-              <TiDeleteOutline className="icon_react" />
+              <img
+                src="https://img.icons8.com/?size=512&id=14237&format=png"
+                className="icon_react"
+              />
             </div>
             <button className="mcq-option-addMore">Add Option</button>
           </div>

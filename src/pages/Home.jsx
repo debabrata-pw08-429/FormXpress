@@ -1,10 +1,7 @@
 // Import React Modules
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { RiDeleteBinLine, RiFileAddFill } from "react-icons/Ri";
 import { Link } from "react-router-dom";
-import { TbEdit } from "react-icons/Tb";
-import { AiFillEye } from "react-icons/Ai";
 
 // Global Variables
 const API = `${import.meta.env.VITE_SOME_apiURL}/forms`;
@@ -90,7 +87,6 @@ const Home = () => {
               </div>
               <div>
                 <button className="home_buttons home_edit_button">
-                  <TbEdit />
                   <Link
                     to={`/edit/${form._id}`}
                     className="home_edit_button_link"
@@ -100,7 +96,6 @@ const Home = () => {
                   </Link>
                 </button>
                 <button className="home_buttons home_preview_button">
-                  <AiFillEye />
                   <Link
                     to={`/preview/${form._id}`}
                     className="home_preview_button_link"
@@ -114,7 +109,6 @@ const Home = () => {
                   onClick={() => handleFormDeletion(form._id)}
                   className="home_buttons home_delete_button"
                 >
-                  <RiDeleteBinLine />
                   Delete
                 </button>
               </div>
@@ -125,7 +119,7 @@ const Home = () => {
 
       {/* Add new form icon */}
       <div onClick={addNewForm} className="home-add">
-        <RiFileAddFill className="form-add" />
+        +
       </div>
     </div>
   );

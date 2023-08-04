@@ -52,10 +52,7 @@ const PreviewForm = () => {
 
           {section.type === "categorize" && (
             <div className="Categorize_section">
-              <div className="section_header">
-                []
-                {section.type}
-              </div>
+              <div className="section_header">{section.type}</div>
               <div className="section_title_des">
                 <h3>{section.title}</h3>
                 <p>{section.description}</p>
@@ -86,7 +83,7 @@ const PreviewForm = () => {
           {/* Type cloze Section_ */}
           {section.type === "cloze" && (
             <div className="Cloze_section">
-              <div className="section_header">[] {section.type}</div>
+              <div className="section_header">{section.type}</div>
 
               <div className="section_title_des">
                 <h3>{section.title}</h3>

@@ -1,7 +1,5 @@
 // Import React Modules
 import { useEffect, useRef, useState } from "react";
-import { BsPlusCircleDotted } from "react-icons/Bs";
-import { RiImageAddFill } from "react-icons/Ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
@@ -139,7 +137,12 @@ const Edit = () => {
               backgroundImage: `url(${headerImage})`,
             }}
           >
-            {headerImage ? null : <RiImageAddFill className="cover-img" />}
+            {headerImage ? null : (
+              <img
+                src="https://img.icons8.com/?size=512&id=GiNKOzxL3w6e&format=png"
+                className="cover-img"
+              />
+            )}
 
             <input
               type="file"
@@ -197,7 +200,8 @@ const Edit = () => {
             <option value="comprehension">Comprehension</option>
             <option value="cloze">Cloze</option>
           </select>
-          <BsPlusCircleDotted
+          <img
+            src="https://img.icons8.com/?size=512&id=24717&format=png"
             className="add-section-icon"
             onClick={handleAddSection}
           />

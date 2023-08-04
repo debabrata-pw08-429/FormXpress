@@ -35,3 +35,8 @@
   color: whitesmoke;
   padding: 0.5rem;
 }
+
+.nav_sub .nav-img {
+  width: 30px;
+  height: 30px;
+}
