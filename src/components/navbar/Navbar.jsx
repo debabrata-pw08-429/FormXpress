@@ -14,7 +14,7 @@ const Navbar = () => {
 
         <nav className="nav_sub">
           <NavLink
-            to="https://github.com/debabrata-pw08-429"
+            to="https://github.com/debabrata-pw08-429/FormXpress"
             style={({ isActive }) => {
               return {
                 fontWeight: isActive ? "bold" : "",
