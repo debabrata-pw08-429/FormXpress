@@ -7,7 +7,10 @@ import {
   GET_EDIT_FORM,
 } from "./actionTypes";
 
-const initialState = {};
+const initialState = {
+  header: {},
+  sections: [],
+};
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {

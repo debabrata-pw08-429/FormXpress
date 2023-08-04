@@ -13,6 +13,10 @@ import { set_CategorizeDetails } from "../../ReduxStore/_singleForm/actions";
 import "./categorizeModule.css";
 
 const Categorize = (props) => {
+  // Redux Setup_
+  const dispatch = useDispatch();
+  const reduxSectionsData = useSelector((state) => state.formReducer.sections);
+
   // Manage Current State_
   const [categorizeObj, setCategorizeObj] = useState({
     type: "categorize",
@@ -23,11 +27,9 @@ const Categorize = (props) => {
     image: props.image || "",
   });
 
-  // Redux Setup_
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    return dispatch(set_CategorizeDetails(categorizeObj));
+    reduxSectionsData[props.index] = categorizeObj;
+    dispatch(set_CategorizeDetails([...reduxSectionsData]));
   }, [dispatch, categorizeObj]);
 
   // Handle deleting a cloze section
@@ -103,6 +105,10 @@ const Categorize = (props) => {
     };
     setCategorizeObj(obj);
   };
+
+  if (!categorizeObj) {
+    return <h1 className="Noform">Loading...</h1>;
+  }
 
   return (
     <div className="categorize">

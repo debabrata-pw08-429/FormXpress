@@ -8,8 +8,8 @@ import { useLocation } from "react-router-dom";
 // Import Local Utilities
 import Section from "../components/form_sections/Section";
 import {
-  set_FormData,
   Set_EditedSections,
+  set_FormData,
   updateFormDetailsAction,
 } from "../ReduxStore/_singleForm/actions";
 import {
@@ -42,11 +42,12 @@ const Edit = () => {
       .then((res) => {
         let response = res.data;
         setCurrFormData(response);
+        dispatch(set_FormData(response));
       })
       .catch((error) => {
         console.error("Error fetching forms:", error);
       });
-  }, [currLocation.pathname, API]);
+  }, [dispatch, currLocation.pathname, API]);
 
   // Merge API data and Redux store data into form data
   useEffect(() => {
@@ -73,7 +74,7 @@ const Edit = () => {
     }
 
     setFormSections((prevSections) => [...prevSections, newSection]);
-    dispatch(Set_EditedSections([...formSections, newSection]));
+    dispatch(Set_EditedSections([...reduxFormData.sections, newSection]));
     setSelectedQuestionType("");
   };
 
@@ -113,7 +114,7 @@ const Edit = () => {
         ...formHeader,
         imageURL: headerImage,
       },
-      sections: formSections,
+      sections: reduxFormData.sections,
     };
 
     setCurrFormData(newFormData);

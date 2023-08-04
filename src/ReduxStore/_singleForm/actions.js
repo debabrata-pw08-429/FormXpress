@@ -60,13 +60,12 @@ const set_HeaderDetails = (data) => {
   };
 };
 
-const set_CategorizeDetails = (idx, data, sectionsData) => {
-  if (idx) {
-    sectionsData[idx] = data;
-  } else {
-    sectionsData[0] = data;
-  }
-
+const set_CategorizeDetails = (sectionsData) => {
+  // if (idx) {
+  //   sectionsData[idx] = data;
+  // } else {
+  //   sectionsData[0] = data;
+  // }
   return {
     type: SET_EDIT_Categorize,
     payload: sectionsData,
