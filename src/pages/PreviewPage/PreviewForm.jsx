@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./previewPage.css";
-import { FaDragon } from "react-icons/Fa";
 
 const PreviewForm = () => {
   const location = useLocation();
@@ -54,7 +53,7 @@ const PreviewForm = () => {
           {section.type === "categorize" && (
             <div className="Categorize_section">
               <div className="section_header">
-                <FaDragon />
+                []
                 {section.type}
               </div>
               <div className="section_title_des">
@@ -87,9 +86,7 @@ const PreviewForm = () => {
           {/* Type cloze Section_ */}
           {section.type === "cloze" && (
             <div className="Cloze_section">
-              <div className="section_header">
-                <FaDragon /> {section.type}
-              </div>
+              <div className="section_header">[] {section.type}</div>
 
               <div className="section_title_des">
                 <h3>{section.title}</h3>
