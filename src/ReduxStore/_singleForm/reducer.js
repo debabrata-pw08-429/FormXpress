@@ -38,7 +38,7 @@ const reducer = (state = initialState, { type, payload }) => {
     case SET_EDIT_Cloze:
       return {
         ...state,
-        sections: payload,
+        sections: [...payload],
       };
 
     case SET_EDIT_Comprehension:

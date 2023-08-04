@@ -72,10 +72,10 @@ const set_CategorizeDetails = (sectionsData) => {
   };
 };
 
-const set_ClozeDetails = (data) => {
+const set_ClozeDetails = (sectionsData) => {
   return {
     type: SET_EDIT_Cloze,
-    payload: data,
+    payload: sectionsData,
   };
 };
 

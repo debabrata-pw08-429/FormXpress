@@ -2,23 +2,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { RiFileAddFill } from "react-icons/Ri";
-
 import { Link } from "react-router-dom";
-
-// Import Styles
-import "../App.css";
-
-// Import Locals_
-// import { fetchFormDetailsAction } from "../ReduxStore/_singleForm/actions";
 
 // Global Variables
 const API = `${import.meta.env.VITE_SOME_apiURL}/forms`;
 
+// Import Styles
+import "../App.css";
+
 // Home Component
 const Home = () => {
-  // const dispatch = useDispatch();
   const [forms, setForms] = useState([]);
-  // const navigate = useNavigate();
 
   // Fetch all forms on component mount
   useEffect(() => {
@@ -35,12 +29,6 @@ const Home = () => {
     };
     fetchAllForms();
   }, []);
-
-  // Redirects to the edit page for a specific form
-  // const redirectToEditPage = (formId) => {
-  //   dispatch(fetchFormDetailsAction(formId));
-  //   navigate(`/edit/${formId}`);
-  // };
 
   // Adds a new form to the server and refreshes the page
   const addNewForm = () => {

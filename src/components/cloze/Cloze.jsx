@@ -5,20 +5,32 @@ import "./clozeModule.css";
 import { MdDragIndicator } from "react-icons/Md";
 import { TiDeleteOutline } from "react-icons/Ti";
 import { RiDeleteBin6Line, RiImageAddFill } from "react-icons/Ri";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+
+// Import Locals_
+import { set_ClozeDetails } from "../../ReduxStore/_singleForm/actions";
 
 const Cloze = (props) => {
+  // Redux Setup_
+  const dispatch = useDispatch();
+  const reduxSectionsData = useSelector((state) => state.formReducer.sections);
   // State to store the cloze object
   const [clozeObj, setClozeObj] = useState({
     type: "cloze",
-    title: props.title,
-    description: props.description,
-    options: props.options,
-    sentenceCase: props.sentenceCase,
-    PreviewCase: props.PreviewCase,
-    image: props.image,
+    title: props.title || "",
+    description: props.description || "",
+    options: props.options || [],
+    sentenceCase: props.sentenceCase || "",
+    PreviewCase: props.PreviewCase || "",
+    image: props.image || "",
   });
+
+  useEffect(() => {
+    reduxSectionsData[props.index] = clozeObj;
+    dispatch(set_ClozeDetails([...reduxSectionsData]));
+  }, [dispatch, clozeObj]);
 
   // Handle deleting a cloze section
   const handleDelete = (idx) => {
