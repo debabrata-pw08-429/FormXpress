@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { BsPlusCircleDotted } from "react-icons/Bs";
 import { RiImageAddFill } from "react-icons/Ri";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 // Import Local Utilities
 import Section from "../components/form_sections/Section";
 import {
+  set_FormData,
   Set_EditedSections,
-  fetchFormDetailsAction,
   updateFormDetailsAction,
 } from "../ReduxStore/_singleForm/actions";
 import {
@@ -21,54 +21,40 @@ import {
 // Import Styles
 import "../App.css";
 import "../components/form_header/headerModule.css";
-import { useNavigate } from "react-router-dom";
-
-// Global Variables
-const pathname = window.location.pathname;
-const formId = pathname.split("/").pop();
-const API = `${import.meta.env.VITE_SOME_apiURL}`;
+import axios from "axios";
 
 const Edit = () => {
-  const dispatch = useDispatch();
-  const initFormData = useSelector((state) => {
-    return state.formReducer;
-  });
-
-  console.log(initFormData);
-
-  const [formHeader, setFormHeader] = useState({
-    ...initFormData.header,
-    imageURL: initFormData.header?.imageURL || "",
-  });
-
-  const [formSections, setFormSections] = useState(initFormData.sections);
-  const [headerImage, setHeaderImage] = useState(formHeader.imageURL);
+  const currLocation = useLocation();
+  const [formData, setCurrFormData] = useState(currLocation.state);
+  const [formHeader, setFormHeader] = useState(formData.header);
+  const [formSections, setFormSections] = useState(formData.sections);
+  const [headerImage, setHeaderImage] = useState(formData.header.imageURL);
   const [selectedQuestionType, setSelectedQuestionType] = useState("");
   const fileInputRef = useRef(null);
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const reduxFormData = useSelector((state) => state.formReducer);
+  const API = `${import.meta.env.VITE_SOME_apiURL}`;
 
   useEffect(() => {
-    dispatch(fetchFormDetailsAction(formId));
-    // async function fetchData() {
-    //   try {
-    //     const response = await axios.get(`${API}/edit/${formId}`);
-    //     const data = response.data;
-    //     console.log(data);
-    //     if (data.header) {
-    //       console.log("data.header,", data.header);
-    //       setFormHeader(data.header);
-    //     }
+    // Fetch data from API and update local state
+    axios
+      .get(`${API}${currLocation.pathname}`)
+      .then((res) => {
+        let response = res.data;
+        setCurrFormData(response);
+      })
+      .catch((error) => {
+        console.error("Error fetching forms:", error);
+      });
+  }, [currLocation.pathname, API]);
 
-    //     if (data.sections) {
-    //       setFormSections(data.sections);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error:", error);
-    //   }
-    // }
-
-    // fetchData();
-  }, [dispatch]);
+  // Merge API data and Redux store data into form data
+  useEffect(() => {
+    setCurrFormData((prevData) => ({
+      ...prevData,
+      ...reduxFormData,
+    }));
+  }, [reduxFormData]);
 
   const handleAddSection = () => {
     if (selectedQuestionType === "") {
@@ -87,7 +73,7 @@ const Edit = () => {
     }
 
     setFormSections((prevSections) => [...prevSections, newSection]);
-    dispatch(Set_EditedSections([...formSections]));
+    dispatch(Set_EditedSections([...formSections, newSection]));
     setSelectedQuestionType("");
   };
 
@@ -112,7 +98,7 @@ const Edit = () => {
         setHeaderImage(reader.result);
       };
     } else {
-      setHeaderImage(formHeader.imageURL);
+      setHeaderImage(headerImage);
     }
   };
 
@@ -120,9 +106,9 @@ const Edit = () => {
     fileInputRef.current.click();
   };
 
-  const handleFormSave = () => {
-    const newFormData = {
-      ...initFormData,
+  const handleFormSave = async () => {
+    let newFormData = {
+      ...formData,
       header: {
         ...formHeader,
         imageURL: headerImage,
@@ -130,11 +116,14 @@ const Edit = () => {
       sections: formSections,
     };
 
-    dispatch(updateFormDetailsAction(formId, newFormData));
-    navigate("/");
+    setCurrFormData(newFormData);
+    dispatch(updateFormDetailsAction(currLocation.pathname, newFormData));
+
+    alert("Form Saved!");
+    window.location.pathname = "/";
   };
 
-  if (!initFormData) {
+  if (!formHeader) {
     return <h1>Loading...</h1>;
   }
 
@@ -188,9 +177,9 @@ const Edit = () => {
         return (
           <Section
             key={index}
+            index={index}
             {...ele}
             handleSectionDelete={handleSectionDelete}
-            index={index}
           />
         );
       })}

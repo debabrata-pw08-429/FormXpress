@@ -1,19 +1,19 @@
+// Import React Modules
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import "./categorizeModule.css";
 import { MdAddCircle, MdDragIndicator } from "react-icons/Md";
 import { RiDeleteBin6Line, RiImageAddFill } from "react-icons/Ri";
 import { TiDeleteOutline } from "react-icons/Ti";
 import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+
+// Import Local Utilities
 import { set_CategorizeDetails } from "../../ReduxStore/_singleForm/actions";
 
-const Categorize = (props) => {
-  // State to manage the Categorize component's data
-  const dispatch = useDispatch();
-  const sectionsData = useSelector((state) => {
-    return state.formReducer.sections;
-  });
+// Import Styles
+import "./categorizeModule.css";
 
+const Categorize = (props) => {
+  // Manage Current State_
   const [categorizeObj, setCategorizeObj] = useState({
     type: "categorize",
     title: props.title || "",
@@ -23,11 +23,12 @@ const Categorize = (props) => {
     image: props.image || "",
   });
 
-  
+  // Redux Setup_
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    sectionsData[props.index] = categorizeObj;
-    dispatch(set_CategorizeDetails(sectionsData));
-  }, [categorizeObj, props.index, dispatch, sectionsData]);
+    return dispatch(set_CategorizeDetails(categorizeObj));
+  }, [dispatch, categorizeObj]);
 
   // Handle deleting a cloze section
   const handleDelete = (idx) => {

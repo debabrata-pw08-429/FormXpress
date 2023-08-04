@@ -12,12 +12,12 @@ const initialState = {};
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_EDIT_FORM:
-      return { ...state, ...payload };
+      return payload;
 
     case SET_UPDATE_SECTIONS:
       return {
         ...state,
-        sections: payload,
+        sections: [...payload],
       };
 
     case SET_EDIT_Header:
@@ -29,7 +29,7 @@ const reducer = (state = initialState, { type, payload }) => {
     case SET_EDIT_Categorize:
       return {
         ...state,
-        sections: payload,
+        sections: [...payload],
       };
 
     case SET_EDIT_Cloze:

@@ -2,23 +2,23 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { RiFileAddFill } from "react-icons/Ri";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 
 // Import Styles
 import "../App.css";
 
 // Import Locals_
-import { fetchFormDetailsAction } from "../ReduxStore/_singleForm/actions";
+// import { fetchFormDetailsAction } from "../ReduxStore/_singleForm/actions";
 
 // Global Variables
 const API = `${import.meta.env.VITE_SOME_apiURL}/forms`;
 
 // Home Component
 const Home = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [forms, setForms] = useState([]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Fetch all forms on component mount
   useEffect(() => {
@@ -37,10 +37,10 @@ const Home = () => {
   }, []);
 
   // Redirects to the edit page for a specific form
-  const redirectToEditPage = (formId) => {
-    dispatch(fetchFormDetailsAction(formId));
-    navigate(`/edit/${formId}`);
-  };
+  // const redirectToEditPage = (formId) => {
+  //   dispatch(fetchFormDetailsAction(formId));
+  //   navigate(`/edit/${formId}`);
+  // };
 
   // Adds a new form to the server and refreshes the page
   const addNewForm = () => {
@@ -97,8 +97,14 @@ const Home = () => {
                 <h3 key={index}>{form.header.title}</h3>
               </div>
               <div>
-                <button onClick={() => redirectToEditPage(form._id)}>
-                  Edit
+                <button>
+                  <Link
+                    to={`/edit/${form._id}`}
+                    className="home_edit_button"
+                    state={form}
+                  >
+                    Edit
+                  </Link>
                 </button>
 
                 <button onClick={() => handleFormDeletion(form._id)}>

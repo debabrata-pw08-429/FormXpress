@@ -16,8 +16,7 @@ const fetchFormDetailsAction = (id) => {
       .get(`${API}/edit/${id}`)
       .then((res) => {
         let formData = res.data;
-        console.log("formData from store", formData);
-        dispatch(setFormData(formData));
+        dispatch(set_FormData(formData));
       })
       .catch((error) => {
         console.error("Error fetching forms:", error);
@@ -25,13 +24,13 @@ const fetchFormDetailsAction = (id) => {
   };
 };
 
-const updateFormDetailsAction = (formId, updatedData) => {
+const updateFormDetailsAction = (pathname, updatedData) => {
   return (dispatch) => {
     axios
-      .post(`${API}/edit/${formId}`, updatedData)
+      .post(`${API}${pathname}`, updatedData)
       .then((res) => {
         let formData = res.data;
-        dispatch(setFormData(formData));
+        dispatch(set_FormData(formData));
       })
       .catch((error) => {
         console.error("Error updating forms:", error);
@@ -39,26 +38,12 @@ const updateFormDetailsAction = (formId, updatedData) => {
   };
 };
 
-const setFormData = (data) => {
+const set_FormData = (data) => {
   return {
     type: GET_EDIT_FORM,
     payload: data,
   };
 };
-
-// const get_FormDetails = (data) => {
-//   return {
-//     type: GET_EDIT_FORM,
-//     payload: data,
-//   };
-// };
-
-// const fetch_FormDetails = (data) => {
-//   return {
-//     type: GET_EDIT_FORM,
-//     payload: data,
-//   };
-// };
 
 const Set_EditedSections = (data) => {
   return {
@@ -75,10 +60,16 @@ const set_HeaderDetails = (data) => {
   };
 };
 
-const set_CategorizeDetails = (data) => {
+const set_CategorizeDetails = (idx, data, sectionsData) => {
+  if (idx) {
+    sectionsData[idx] = data;
+  } else {
+    sectionsData[0] = data;
+  }
+
   return {
     type: SET_EDIT_Categorize,
-    payload: data,
+    payload: sectionsData,
   };
 };
 
@@ -125,4 +116,5 @@ export {
   sendFormCloudinary,
   fetchFormDetailsAction,
   updateFormDetailsAction,
+  set_FormData,
 };
