@@ -102,7 +102,7 @@ const Home = () => {
                 <button className="home_buttons home_preview_button">
                   <AiFillEye />
                   <Link
-                    to={`/edit/${form._id}`}
+                    to={`/preview/${form._id}`}
                     className="home_preview_button_link"
                     state={form}
                   >
