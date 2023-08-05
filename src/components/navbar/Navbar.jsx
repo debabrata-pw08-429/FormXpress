@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "./navbarModule.css";
+import { BsGithub } from "react-icons/bs";
 import Logo from "../../assets/Logo.png";
 
 const Navbar = () => {
@@ -25,10 +26,11 @@ const Navbar = () => {
             }}
             target="_blank"
           >
-            <img
+            <BsGithub />
+            {/* <img
               src="https://img.icons8.com/?size=512&id=62856&format=png"
               className="nav-img"
-            />
+            /> */}
           </NavLink>
         </nav>
       </nav>
