@@ -1,8 +1,6 @@
 // Import Components_
 import AllRoutes from "./components/AllRoutes";
 
-import { FaDragon } from "react-icons/fa";
-
 // Import Styles_
 import "./App.css";
 
@@ -10,9 +8,6 @@ import "./App.css";
 function App() {
   return (
     <>
-      <h3>
-        <FaDragon />
-      </h3>
       <AllRoutes />
     </>
   );
